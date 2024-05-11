@@ -1,0 +1,58 @@
+@import url('./index.css');
+
+/* Estilos gerais */
+body {
+    font-family: "Montserrat", sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+/* Contêiner da tabela para overflow */
+.tabela-container {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos da tabela */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* Responsividade com media queries */
+@media (max-width: 768px) {
+    th, td {
+        padding: 6px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    th, td {
+        padding: 4px;
+        font-size: 10px;
+    }
+}
+
+th{
+    text-align: center;
+}

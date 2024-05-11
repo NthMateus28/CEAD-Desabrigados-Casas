@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central</title>
+    <link rel="shortcut icon" href="../Img/logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="../style/cadastrarCasa.css" />
+</head>
+<body>
+    <form id="cadastroForm">
+        <h1>Quantidade de Cestas</h1>
+        <label for="nome">Nome do Proprietário:</label>
+        <input type="text" id="nome" name="nome" required>
+        
+        <label for="telefone">Telefone:</label>
+        <input type="text" id="telefone" name="telefone" required>        
+        
+        <label for="responsavel">Responsável (opcional):</label>
+        <input type="text" id="responsavel" name="responsavel">
+        
+        <label for="quantAdultos">Quantidade de Adultos:</label>
+        <input type="text" id="quantAdultos" name="quantAdultos" required>
+        
+        <label for="quantCriancas">Quantidade de Crianças:</label>
+        <input type="text" id="quantCriancas" name="quantCriancas" required>
+        
+        <label for="quantCestas">Quantidade de Cestas:</label>
+        <input type="number" id="quantCestas" name="quantCestas" required>
+        
+        <label for="dataEntrega">Data de Entrega da Cesta (opcional):</label>
+        <input type="date" id="dataEntrega" name="dataEntrega">
+        
+        <label for="endereco">Endereço:</label>
+        <input type="text" id="endereco" name="endereco" required>
+        
+        <label for="cidade">Cidade:</label>
+        <select id="cidade" name="cidade" required>
+            <option value="">Selecione</option>
+            <!-- As opções serão preenchidas dinamicamente pela função -->
+        </select>
+        
+        <label for="estado">Status:</label>
+        <select id="estado" name="estado" required>
+            <option value="">Selecione</option>
+            <option value="Entregue">Entregue</option>
+            <option value="Aguardando">Aguardando</option>
+        </select>
+        
+        <div class="button-group">
+            <input type="submit" value="Cadastrar">
+            <input type="button" class="buscar" value="Buscar" onclick="buscarDesabrigado()">
+            <input type="button" class="alterar" value="Alterar Dados" onclick="alterarDesabrigado()">
+        </div>
+    </form>
+
+    <script type="module" src="../scripts/cadastrarCasa.js"></script>
+</body>
+</html>

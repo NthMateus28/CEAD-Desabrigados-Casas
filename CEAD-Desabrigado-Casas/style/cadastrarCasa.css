@@ -1,0 +1,73 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&display=swap");
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f0f0f0;
+    font-family: "Montserrat", sans-serif;
+    
+}
+form {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 400px;
+    margin: auto;
+}
+h1 {
+    text-align: center;
+    color: #333;
+}
+label {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+input[type="text"],
+input[type="number"],
+select {
+    border: solid 0.5px #ccc;
+    width: 100%;
+    padding: 8px;
+    border: 1px sólido #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+input[type="submit"], input[type="button"] {
+    width: 100px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+}
+input[type="button"].buscar {
+    background-color: #2196F3; /* Azul */
+    color: white;
+}
+input[type="button"].alterar {
+    background-color: #FF9800; /* Laranja */
+    color: white;
+}
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+input[type="button"].buscar:hover {
+    background-color: #1976D2; /* Azul mais escuro */
+}
+input[type="button"].alterar:hover {
+    background-color: #FB8C00; /* Laranja mais escuro */
+}
