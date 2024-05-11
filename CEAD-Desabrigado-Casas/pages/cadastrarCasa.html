@@ -8,44 +8,45 @@
     <link rel="stylesheet" href="../style/cadastrarCasa.css" />
 </head>
 <body>
-    <form id="cadastroForm">
+    <form id="cadastroForm" action="https://api.sheetmonkey.io/form/9do4Rtc1Vc2zQJU4uZwFVN" method="post">
         <h1>Quantidade de Cestas</h1>
         <label for="nome">Nome do Proprietário:</label>
-        <input type="text" id="nome" name="nome" required>
+        <input type="text" id="nome" name="Nome do Proprietário" required>
         
         <label for="telefone">Telefone:</label>
-        <input type="text" id="telefone" name="telefone" required>        
+        <input type="text" id="telefone" name="Telefone" required>        
         
         <label for="responsavel">Responsável (opcional):</label>
-        <input type="text" id="responsavel" name="responsavel">
+        <input type="text" id="responsavel" name="Responsável">
         
         <label for="quantAdultos">Quantidade de Adultos:</label>
-        <input type="text" id="quantAdultos" name="quantAdultos" required>
+        <input type="text" id="quantAdultos" name="Quantidade de Adultos" required>
         
         <label for="quantCriancas">Quantidade de Crianças:</label>
-        <input type="text" id="quantCriancas" name="quantCriancas" required>
+        <input type="text" id="quantCriancas" name="Quantidade de Crianças" required>
         
         <label for="quantCestas">Quantidade de Cestas:</label>
-        <input type="number" id="quantCestas" name="quantCestas" required>
+        <input type="number" id="quantCestas" name="Quantidade de Cestas" required>
         
         <label for="dataEntrega">Data de Entrega da Cesta (opcional):</label>
-        <input type="date" id="dataEntrega" name="dataEntrega">
+        <input type="date" id="dataEntrega" name="Data de Entrega">
         
         <label for="endereco">Endereço:</label>
-        <input type="text" id="endereco" name="endereco" required>
+        <input type="text" id="endereco" name="Endereço" required>
         
         <label for="cidade">Cidade:</label>
-        <select id="cidade" name="cidade" required>
+        <select id="cidade" name="Cidade" required>
             <option value="">Selecione</option>
-            <!-- As opções serão preenchidas dinamicamente pela função -->
         </select>
         
         <label for="estado">Status:</label>
-        <select id="estado" name="estado" required>
+        <select id="estado" name="Estado" required>
             <option value="">Selecione</option>
             <option value="Entregue">Entregue</option>
             <option value="Aguardando">Aguardando</option>
         </select>
+        
+        <input type="hidden" name="Created" value="x-sheetmonkey-current-date-time" />
         
         <div class="button-group">
             <input type="submit" value="Cadastrar">
@@ -53,6 +54,7 @@
             <input type="button" class="alterar" value="Alterar Dados" onclick="alterarDesabrigado()">
         </div>
     </form>
+    
 
     <script type="module" src="../scripts/cadastrarCasa.js"></script>
 </body>
