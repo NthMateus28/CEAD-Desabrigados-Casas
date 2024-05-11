@@ -100,6 +100,32 @@ const database = getDatabase(app); // Inicialize o Realtime Database
 // Variável global para armazenar a chave do desabrigado encontrado
 let chaveDesabrigadoEncontrado = "";
 
+document.getElementById("cadastroForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const data = {};
+    formData.forEach((value, key) => {
+        data[key] = value;
+    });
+
+    // Adiciona a data e hora atual de criação
+    data['Created'] = new Date().toISOString();
+
+    fetch("https://api.sheetmonkey.io/form/9do4Rtc1Vc2zQJU4uZwFVN", {
+        method: 'POST',
+        body: formData
+    }).then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+        alert('Cadastro realizado com sucesso!');
+        event.target.reset(); // Limpar o formulário após o cadastro
+        cadastrarDesabrigado();
+        }).catch((error) => {
+        console.error('Error:', error);
+        // alert('Erro ao enviar dados: ' + error.message);
+    });
+});
+
 // Função para cadastrar desabrigados
 function cadastrarDesabrigado(event) {
     event.preventDefault(); // Evitar o recarregamento da página
@@ -215,11 +241,13 @@ window.alterarDesabrigado = function() {
     update(ref(database, 'desabrigados/' + chaveDesabrigadoEncontrado), dadosAtualizados)
     .then(() => {
         alert("Dados atualizados com sucesso!");
+        document.getElementById("cadastroForm").reset(); // Limpar o formulário após atualizar
     })
     .catch((error) => {
         alert("Erro ao atualizar os dados: " + error.message);
     });
 }
+
 
 
 // Associar a função `cadastrarDesabrigado` ao evento de envio do formulário
