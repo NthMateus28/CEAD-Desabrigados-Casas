@@ -68,6 +68,25 @@ function carregarCidadesRS() {
 // Chamar a função ao carregar a página
 document.addEventListener("DOMContentLoaded", carregarCidadesRS);
 
+// Função para aplicar máscara de CPF
+function aplicarMascaraCPF(campo) {
+    let cpf = campo.value;
+    cpf = cpf.replace(/\D/g, ""); // Remove tudo o que não é dígito
+    cpf = cpf.substring(0, 11); // Limita o máximo de caracteres
+
+    // Aplica a máscara
+    cpf = cpf.replace(/(\d{3})(\d)/, "$1.$2");
+    cpf = cpf.replace(/(\d{3})(\d)/, "$1.$2");
+    cpf = cpf.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+
+    campo.value = cpf; // Atualiza o valor do campo
+}
+
+// Associar a função ao evento `input` do campo CPF
+document.getElementById("cpf").addEventListener("input", function() {
+    aplicarMascaraCPF(this);
+});
+
 // Inicializar o Firebase e banco de dados
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import {
@@ -131,7 +150,9 @@ function cadastrarDesabrigado(event) {
     event.preventDefault(); // Evitar o recarregamento da página
 
     // Obter dados do formulário
+
     const nome = document.getElementById("nome").value;
+    const cpf = document.getElementById("cpf").value;
     const telefone = document.getElementById("telefone").value;
     const responsavel = document.getElementById("responsavel").value;
     const quantAdultos = document.getElementById("quantAdultos").value;
@@ -149,6 +170,7 @@ function cadastrarDesabrigado(event) {
     // Configuração dos dados a serem enviados
     const dadosRegistro = {
         nome,
+        cpf, // Incluído no cadastro
         telefone,
         responsavel,
         quantAdultos,
@@ -158,7 +180,7 @@ function cadastrarDesabrigado(event) {
         endereco,
         cidade,
         estado,
-        dataCadastro // Adiciona a data e hora do cadastro
+        dataCadastro
     };
 
 
@@ -197,6 +219,7 @@ window.buscarDesabrigado = function() {
 
                 // Preencher os campos do formulário com os dados encontrados
                 document.getElementById("nome").value = dados.nome || "";
+                document.getElementById("cpf").value = dados.cpf || ""; // Garante que o CPF é atualizado no formulário
                 document.getElementById("telefone").value = dados.telefone || "";
                 document.getElementById("responsavel").value = dados.responsavel || "";
                 document.getElementById("quantAdultos").value = dados.quantAdultos || "";
@@ -226,6 +249,7 @@ window.alterarDesabrigado = function() {
 
     const dadosAtualizados = {
         nome: document.getElementById("nome").value,
+        cpf: document.getElementById("cpf").value,
         telefone: document.getElementById("telefone").value,
         responsavel: document.getElementById("responsavel").value,
         quantAdultos: document.getElementById("quantAdultos").value,
