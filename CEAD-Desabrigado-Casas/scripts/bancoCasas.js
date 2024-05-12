@@ -45,6 +45,7 @@ function adicionarLinhaTabela(dados) {
     novaLinha.innerHTML = `
         <td>${dataFormatada}</td>
         <td>${dados.nome || ""}</td>
+        <td>${dados.cpf || ""}</td>
         <td>${dados.telefone || ""}</td>
         <td>${dados.responsavel || ""}</td>
         <td>${dados.quantAdultos || ""}</td>
