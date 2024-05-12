@@ -119,31 +119,40 @@ const database = getDatabase(app); // Inicialize o Realtime Database
 // Variável global para armazenar a chave do desabrigado encontrado
 let chaveDesabrigadoEncontrado = "";
 
+// Adicionando evento ao formulário para interceptar o envio e adicionar lógica customizada
 document.getElementById("cadastroForm").addEventListener("submit", function(event) {
-    event.preventDefault();
+    event.preventDefault(); // Previne o envio padrão do formulário
+
     const formData = new FormData(event.target);
-    const data = {};
-    formData.forEach((value, key) => {
-        data[key] = value;
-    });
 
-    // Adiciona a data e hora atual de criação
-    data['Created'] = new Date().toISOString();
+    // Certifique-se de capturar o CPF formatado corretamente
+    formData.set("CPF do Proprietário", document.getElementById("cpf").value);
 
+    // Adiciona a data e hora atual de criação, se necessário
+    formData.set("Created", new Date().toISOString());
+
+    // Opção para verificar os dados sendo enviados
+    for (var pair of formData.entries()) {
+        console.log(pair[0]+ ', ' + pair[1]); 
+    }
+
+    // Enviar os dados para o Sheetmonkey via API
     fetch("https://api.sheetmonkey.io/form/9do4Rtc1Vc2zQJU4uZwFVN", {
-        method: 'POST',
+        method: "POST",
         body: formData
-    }).then(response => response.json())
+    })
+    .then(response => response.json())
     .then(data => {
         console.log('Success:', data);
         alert('Cadastro realizado com sucesso!');
-        event.target.reset(); // Limpar o formulário após o cadastro
-        cadastrarDesabrigado();
-        }).catch((error) => {
+        document.getElementById("cadastroForm").reset(); // Limpar o formulário após o cadastro
+    })
+    .catch((error) => {
         console.error('Error:', error);
         // alert('Erro ao enviar dados: ' + error.message);
     });
 });
+
 
 // Função para cadastrar desabrigados
 function cadastrarDesabrigado(event) {
