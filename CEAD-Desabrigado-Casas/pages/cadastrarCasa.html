@@ -13,8 +13,11 @@
         <label for="nome">Nome do Proprietário:</label>
         <input type="text" id="nome" name="Nome do Proprietário" required>
         
+        <label for="cpf">CPF do Proprietário:</label>
+        <input type="text" id="cpf" name="CPF do Proprietário" required>
+        
         <label for="telefone">Telefone:</label>
-        <input type="text" id="telefone" name="Telefone" required>        
+        <input type="text" id="telefone" name="Telefone" required>
         
         <label for="responsavel">Responsável (opcional):</label>
         <input type="text" id="responsavel" name="Responsável">
@@ -37,6 +40,7 @@
         <label for="cidade">Cidade:</label>
         <select id="cidade" name="Cidade" required>
             <option value="">Selecione</option>
+            <!-- As opções serão preenchidas dinamicamente pela função -->
         </select>
         
         <label for="estado">Status:</label>
@@ -54,7 +58,6 @@
             <input type="button" class="alterar" value="Alterar Dados" onclick="alterarDesabrigado()">
         </div>
     </form>
-    
 
     <script type="module" src="../scripts/cadastrarCasa.js"></script>
 </body>
