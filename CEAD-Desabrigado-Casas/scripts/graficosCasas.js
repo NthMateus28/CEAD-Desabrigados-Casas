@@ -19,7 +19,7 @@ const firebaseConfig = {
 
 // Inicialize o app Firebase
 const app = initializeApp(firebaseConfig);
-const database = getDatabase(app); // Inicialize o Realtime Database
+const database = getDatabase(app);
 
 // Variáveis para contar os status
 let quantEntregue = 0;
@@ -35,39 +35,40 @@ let graficoPizza;
 function atualizarGrafico() {
     const contexto = document.getElementById("graficoIdades").getContext("2d");
 
-    // Se o gráfico já foi criado, apenas atualize os dados
     if (graficoPizza) {
-        graficoPizza.data.datasets[0].data = [
-            quantEntregue,
-            quantAguardando
-        ];
-        graficoPizza.update(); // Atualiza os dados no gráfico
+        graficoPizza.data.datasets[0].data = [quantEntregue, quantAguardando];
+        graficoPizza.update();
     } else {
-        // Cria o gráfico de pizza pela primeira vez
         graficoPizza = new Chart(contexto, {
-            type: "pie", // Tipo de gráfico de pizza
+            type: 'pie',
             data: {
-                labels: [
-                    "Entregue",
-                    "Aguardando"
-                ],
-                datasets: [
-                    {
-                        label: "Status das Entregas",
-                        data: [
-                            quantEntregue,
-                            quantAguardando
-                        ],
-                        backgroundColor: [
-                            "#4CAF50", // Verde para Entregue
-                            "#FFC107" // Amarelo para Aguardando
-                        ]
-                    }
-                ]
+                labels: ["Entregue", "Aguardando"],
+                datasets: [{
+                    label: 'Status das Entregas',
+                    data: [quantEntregue, quantAguardando],
+                    backgroundColor: ['#4CAF50', '#FFC107'],
+                }]
             },
             options: {
-                responsive: true
+                responsive: true,
+                plugins: {
+                    datalabels: {
+                        color: '#000',
+                        anchor: 'end',
+                        align: 'start',
+                        formatter: (value, ctx) => {
+                            let sum = 0;
+                            let dataArr = ctx.chart.data.datasets[0].data;
+                            dataArr.map(data => {
+                                sum += data;
+                            });
+                            let percentage = (value*100 / sum).toFixed(2)+"%";
+                            return value + ' (' + percentage + ')';
+                        }
+                    }
+                }
             }
+            
         });
     }
 }
@@ -87,3 +88,6 @@ onChildAdded(desabrigadosRef, (snapshot) => {
     // Atualizar o gráfico com os novos valores
     atualizarGrafico();
 });
+
+// Certifique-se de que a biblioteca de etiquetas de dados está registrada se estiver usando a versão mais recente do Chart.js.
+Chart.register(ChartDataLabels);
