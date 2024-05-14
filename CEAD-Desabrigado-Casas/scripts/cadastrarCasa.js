@@ -153,56 +153,72 @@ document.getElementById("cadastroForm").addEventListener("submit", function(even
     });
 });
 
+// Função para atualizar a quantidade de cestas na interface
+function atualizarQuantidadeCestas() {
+    const quantAdultos = document.getElementById("quantAdultos").value || 0;
+    const quantCriancas = document.getElementById("quantCriancas").value || 0;
+    const quantCestas = calcularCestas(quantAdultos, quantCriancas);
+    document.getElementById("quantCestas").textContent = quantCestas;
+}
 
-// Função para cadastrar desabrigados
-function cadastrarDesabrigado(event) {
-    event.preventDefault(); // Evitar o recarregamento da página
+function calcularCestas() {
+    const quantAdultos = parseInt(document.getElementById("quantAdultos").value) || 0;
+    const quantCriancas = parseInt(document.getElementById("quantCriancas").value) || 0;
+    const totalPessoas = quantAdultos + quantCriancas;
 
-    // Obter dados do formulário
+    if (totalPessoas <= 6) {
+        return 1;
+    } else if (totalPessoas <= 12) {
+        return 2;
+    } else {
+        return 3;
+    }
+}
 
+// Adicionar eventos de input para recalcular as cestas automaticamente
+document.getElementById("quantAdultos").addEventListener("input", () => {
+    document.getElementById("quantCestas").textContent = calcularCestas();
+});
+document.getElementById("quantCriancas").addEventListener("input", () => {
+    document.getElementById("quantCestas").textContent = calcularCestas();
+});
+
+// Função para tratar a submissão do formulário
+document.getElementById("cadastroForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Evita o envio padrão
+
+    const quantCestas = calcularCestas(); // Calcula a quantidade de cestas baseada nos inputs
+
+    // Obter todos os valores do formulário
     const nome = document.getElementById("nome").value;
     const cpf = document.getElementById("cpf").value;
     const telefone = document.getElementById("telefone").value;
     const responsavel = document.getElementById("responsavel").value;
     const quantAdultos = document.getElementById("quantAdultos").value;
     const quantCriancas = document.getElementById("quantCriancas").value;
-    const quantCestas = document.getElementById("quantCestas").value;
     const dataEntrega = document.getElementById("dataEntrega").value;
     const endereco = document.getElementById("endereco").value;
     const cidade = document.getElementById("cidade").value;
     const estado = document.getElementById("estado").value;
-    const dataCadastro = new Date().toISOString(); // Captura a data e hora atual
+    const dataCadastro = new Date().toISOString();
 
-    // Criar uma chave única para o novo registro
-    const novoRegistroRef = ref(database, 'desabrigados/' + Date.now());
-
-    // Configuração dos dados a serem enviados
     const dadosRegistro = {
-        nome,
-        cpf, // Incluído no cadastro
-        telefone,
-        responsavel,
-        quantAdultos,
-        quantCriancas,
-        quantCestas,
-        dataEntrega,
-        endereco,
-        cidade,
-        estado,
-        dataCadastro
+        nome, cpf, telefone, responsavel, quantAdultos, quantCriancas, quantCestas,
+        dataEntrega, endereco, cidade, estado, dataCadastro
     };
 
-
-    // Enviar dados para o Realtime Database
+    // Envia dados para o Firebase Realtime Database
+    const novoRegistroRef = ref(database, 'desabrigados/' + Date.now());
     set(novoRegistroRef, dadosRegistro)
-    .then(() => {
-        alert('Cadastro realizado com sucesso!');
-        document.getElementById("cadastroForm").reset(); // Limpar o formulário após o cadastro
-    })
-    .catch((error) => {
-        alert('Erro ao cadastrar: ' + error.message);
-    });
-}
+        .then(() => {
+            alert('Cadastro realizado com sucesso!');
+            document.getElementById("cadastroForm").reset(); // Resetar o formulário
+            document.getElementById("quantCestas").textContent = calcularCestas(); // Atualizar a quantidade de cestas
+        })
+        .catch((error) => {
+            alert('Erro ao cadastrar: ' + error.message);
+        });
+});
 
 // Função para buscar desabrigado pelo nome
 window.buscarDesabrigado = function() {
