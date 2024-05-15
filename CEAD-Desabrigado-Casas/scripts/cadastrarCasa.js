@@ -25,15 +25,15 @@ document.getElementById("telefone").addEventListener("input", function() {
 
 // Função para preencher as cidades a partir da API do IBGE
 function carregarCidadesRS() {
-    const selectCidade = document.getElementById("cidade");
+    const datalistCidade = document.getElementById("cidadeList");
     
-    // Verificar se o elemento <select> está acessível
-    if (!selectCidade) {
-        console.error("Elemento <select> com id 'cidade' não encontrado.");
+    // Verificar se o elemento <datalist> está acessível
+    if (!datalistCidade) {
+        console.error("Elemento <datalist> com id 'cidadeList' não encontrado.");
         return;
     }
 
-    console.log("Campo de seleção encontrado:", selectCidade);
+    console.log("Campo de seleção encontrado:", datalistCidade);
 
     // URL para buscar as cidades do Rio Grande do Sul
     const url = "https://servicodados.ibge.gov.br/api/v1/localidades/estados/RS/municipios";
@@ -53,12 +53,10 @@ function carregarCidadesRS() {
                 console.log(`Adicionando cidade: ${cidade.nome}`);
                 const option = document.createElement("option");
                 option.value = cidade.nome;
-                option.textContent = cidade.nome;
-                selectCidade.appendChild(option); // Adiciona a cidade ao campo <select>
+                datalistCidade.appendChild(option); // Adiciona a cidade ao datalist
             });
 
             console.log("Preenchimento das cidades concluído.");
-            console.log(`Conteúdo final do select: ${selectCidade.innerHTML}`);
         })
         .catch(error => {
             console.error("Erro ao carregar as cidades:", error);
@@ -153,19 +151,16 @@ document.getElementById("cadastroForm").addEventListener("submit", function(even
     });
 });
 
-// Função para atualizar a quantidade de cestas na interface
 function atualizarQuantidadeCestas() {
-    const quantAdultos = document.getElementById("quantAdultos").value || 0;
-    const quantCriancas = document.getElementById("quantCriancas").value || 0;
-    const quantCestas = calcularCestas(quantAdultos, quantCriancas);
-    document.getElementById("quantCestas").textContent = quantCestas;
-}
-
-function calcularCestas() {
     const quantAdultos = parseInt(document.getElementById("quantAdultos").value) || 0;
     const quantCriancas = parseInt(document.getElementById("quantCriancas").value) || 0;
-    const totalPessoas = quantAdultos + quantCriancas;
+    const quantCestas = calcularCestas(quantAdultos, quantCriancas);
+    document.getElementById("quantCestas").value = quantCestas; // Atualiza o valor do input
+}
 
+// Função para calcular a quantidade de cestas
+function calcularCestas(quantAdultos, quantCriancas) {
+    const totalPessoas = quantAdultos + quantCriancas;
     if (totalPessoas <= 6) {
         return 1;
     } else if (totalPessoas <= 12) {
@@ -175,13 +170,15 @@ function calcularCestas() {
     }
 }
 
-// Adicionar eventos de input para recalcular as cestas automaticamente
-document.getElementById("quantAdultos").addEventListener("input", () => {
-    document.getElementById("quantCestas").textContent = calcularCestas();
+// Adiciona eventos aos campos de entrada para atualizar a quantidade de cestas em tempo real
+document.getElementById("quantAdultos").addEventListener("input", atualizarQuantidadeCestas);
+document.getElementById("quantCriancas").addEventListener("input", atualizarQuantidadeCestas);
+
+// Garantir que a quantidade de cestas é atualizada ao carregar a página se os campos já estiverem preenchidos
+document.addEventListener("DOMContentLoaded", () => {
+    atualizarQuantidadeCestas(); // Atualiza na carga inicial se houver valores pré-definidos nos campos
 });
-document.getElementById("quantCriancas").addEventListener("input", () => {
-    document.getElementById("quantCestas").textContent = calcularCestas();
-});
+
 
 // Função para tratar a submissão do formulário
 document.getElementById("cadastroForm").addEventListener("submit", function(event) {
