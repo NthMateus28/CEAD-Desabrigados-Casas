@@ -6,6 +6,9 @@
     <title>Central</title>
     <link rel="shortcut icon" href="../Img/logo.png" type="image/x-icon" />
     <link rel="stylesheet" href="../style/cadastrarCasa.css" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
 </head>
 <body>
     <form id="cadastroForm" action="https://api.sheetmonkey.io/form/9do4Rtc1Vc2zQJU4uZwFVN" method="post">
@@ -29,7 +32,7 @@
         <input type="text" id="quantCriancas" name="Quantidade de Crianças" required>
         
         <label for="quantCestas">Quantidade de Cestas:</label>
-        <div id="quantCestas">1</div> <!-- Inicialmente mostra 1, valor mínimo -->        
+        <input type="number" id="quantCestas" name="Quantidade de Cestas" value="1" required> <!-- Inicialmente mostra 1, valor mínimo -->               
         
         <label for="dataEntrega">Data de Entrega da Cesta (opcional):</label>
         <input type="date" id="dataEntrega" name="Data de Entrega">
@@ -38,10 +41,12 @@
         <input type="text" id="endereco" name="Endereço" required>
         
         <label for="cidade">Cidade:</label>
-        <select id="cidade" name="Cidade" required>
-            <option value="">Selecione</option>
+        <input type="text" id="cidade" name="Cidade" list="cidadeList" required>
+        <datalist id="cidadeList">
             <!-- As opções serão preenchidas dinamicamente pela função -->
-        </select>
+        </datalist>
+        
+        
         
         <label for="estado">Status:</label>
         <select id="estado" name="Estado" required>
